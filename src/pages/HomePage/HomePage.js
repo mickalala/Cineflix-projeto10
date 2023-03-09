@@ -11,14 +11,14 @@ export default function HomePage() {
     const [poster, setPoster] = useState([])
 
     useEffect(() => {
-        const request = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
+        const promise = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
 
-        request.then(answer => {
+        promise.then(answer => {
             setPoster(answer.data)
         }
         )
 
-        request.catch(erro =>
+        promise.catch(erro =>
             console.log(erro)
         )
     }
