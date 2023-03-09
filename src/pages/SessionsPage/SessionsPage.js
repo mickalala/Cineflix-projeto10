@@ -1,6 +1,20 @@
 import styled from "styled-components"
 
+import { useEffect } from "react";
+
+import { useParams } from "react-router-dom"
+
+import axios from "axios";
+
 export default function SessionsPage() {
+
+    const {idFilme}= useParams();
+
+    console.log(idFilme)
+
+    useEffect(()=>{
+
+    },[])
 
     return (
         <PageContainer>

@@ -2,9 +2,9 @@ import styled from "styled-components"
 
 import axios from "axios"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
-import { useState } from "react"
+import { Link } from "react-router-dom"
 
 export default function HomePage() {
 
@@ -32,9 +32,11 @@ export default function HomePage() {
             <ListContainer>
 
                 {poster.map((post, index) =>
-                    <MovieContainer key={index}>
-                        <img src={post.posterURL} alt="poster" />
-                    </MovieContainer>
+                  <Link to={`/sessoes/${post.id}`} key={post.id}>
+                        <MovieContainer key={index}>
+                            <img src={post.posterURL} alt="poster" />
+                        </MovieContainer>
+                 </Link>   
                 )}
             </ListContainer>
 
