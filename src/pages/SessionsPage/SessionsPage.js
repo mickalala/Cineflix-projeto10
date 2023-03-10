@@ -30,9 +30,6 @@ export default function SessionsPage() {
         return <p>Carregando...</p>
     }
 
- console.log(days)
-
-
     return (
         <PageContainer>
             Selecione o horário
@@ -42,7 +39,7 @@ export default function SessionsPage() {
                        {sec.weekday}- {sec.date}
                         <ButtonsContainer>                        
                             {sec.showtimes.map((ti)=>
-                            <Link to={`/assentos/${ti.id}`}>
+                            <Link to={`/assentos/${ti.id}`} key={ti.id}>
                                 <button>{ti.name}</button>
                             </Link>
                             )

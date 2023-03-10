@@ -23,7 +23,9 @@ export default function HomePage() {
         )
     }
         , [])
-    console.log(poster)
+        if (poster.length===0){
+            return <p>Carregando...</p>
+        }
 
     return (
         <PageContainer>
