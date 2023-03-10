@@ -6,13 +6,15 @@ import { useEffect, useState } from "react"
 
 import { useParams } from "react-router-dom"
 
+import Seat from "./Seat"
+
 export default function SeatsPage() {
 
     const { idSessao } = useParams();
     const [session, setSession] = useState([]);
     const [seats, setSeats] = useState([]);
 
-    const [selected, setSelected] = useState("");
+
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`;
@@ -32,30 +34,37 @@ export default function SeatsPage() {
     }
     console.log(session);
 
+    // function select(id){
+    //     setSelected(true)
+    //     console.log("id selecionado de assento:")
+    //     console.log(id)
+    // }
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                {seats.map((se) =>
-                    <SeatItem available={se.isAvailable} key={se.id}>
-                        {se.name}
-                    </SeatItem>)}
+                {seats.map((se) =><Seat se={se} key={se.id}/>
+                    // <SeatItem available={se.isAvailable} key={se.id} onClick={()=>select(se.id)}
+                    // selected={selected} >
+                    //     {se.name}
+                    // </SeatItem>
+                    )}
 
             </SeatsContainer>
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle selected={true}/>
+                    <CaptionCircle bColor={"#1AAE9E"} borderColor={"#0E7D71"}/>
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle bColor={"#C3CFD9"} borderColor={"#7B8B99"}/>
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle unvailable={true} />
+                    <CaptionCircle bColor={"#FBE192"} borderColor={"#F7C52B"} />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
@@ -105,7 +114,7 @@ const SeatsContainer = styled.div`
     justify-content: center;
     margin-top: 20px;
 `
-const FormContainer = styled.div`
+const FormContainer = styled.form`
     width: calc(100vw - 40px); 
     display: flex;
     flex-direction: column;
@@ -127,8 +136,8 @@ const CaptionContainer = styled.div`
     margin: 20px;
 `
 const CaptionCircle = styled.div`
-    border: 1px solid ${(props) => (props.unvailable) ? "#F7C52B" : "blue"};         // Essa cor deve mudar
-    background-color:${(props) => (props.unvailable) ? "#FBE192" : "lightblue"} ;    // Essa cor deve mudar
+    border: 1px solid ${(props) => (props.borderColor)};         // Essa cor deve mudar
+    background-color:${(props) => (props.bColor) } ;    // Essa cor deve mudar
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -143,19 +152,20 @@ const CaptionItem = styled.div`
     align-items: center;
     font-size: 12px;
 `
-const SeatItem = styled.div`
-    border: 1px solid ${(props) => (props.available) ? "blue" : "#F7C52B"};         // Essa cor deve mudar
-    background-color:${(props) => (props.available) ? "lightblue" : "#FBE192"};    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
-`
+// const SeatItem = styled.div`
+//     border: 1px solid ${(props) => (props.available) ? "blue" : "#F7C52B"};         // Essa cor deve mudar
+//     background-color:${(props) => (props.available) ? "lightblue" : "#FBE192"};    // Essa cor deve mudar
+//     background-color:${(props)=> (props.selected)? "#1AAE9E" : ""};
+//     height: 25px;
+//     width: 25px;
+//     border-radius: 25px;
+//     font-family: 'Roboto';
+//     font-size: 11px;
+//     display: flex;
+//     align-items: center;
+//     justify-content: center;
+//     margin: 5px 3px;
+// `
 const FooterContainer = styled.div`
     width: 100%;
     height: 120px;
