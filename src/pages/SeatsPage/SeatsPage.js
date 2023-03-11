@@ -4,7 +4,7 @@ import axios from "axios"
 
 import { useEffect, useState } from "react"
 
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 
 import Seat from "./Seat"
 
@@ -14,7 +14,12 @@ export default function SeatsPage() {
     const [session, setSession] = useState([]);
     const [seats, setSeats] = useState([]);
 
+    const [userCPF, setUserCPF]= useState("");
+    const [userName, setUserName]= useState("");
 
+    const [seatID, setSeatID]= useState("")
+
+    const navigate= useNavigate();
 
     useEffect(() => {
         const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`;
@@ -33,24 +38,28 @@ export default function SeatsPage() {
         return <p>Carregando...</p>
     }
     console.log(session);
+    console.log(seatID)
 
-    // function select(id){
-    //     setSelected(true)
-    //     console.log("id selecionado de assento:")
-    //     console.log(id)
-    // }
+    function submitSeat(event){
+
+        event.preventDefault();
+
+        const request= axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many",{
+            ids: seatID,
+            name: userName,
+            cpf: userCPF,
+        })
+        request.then(() => navigate("/sucesso")) 
+
+    }
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                {seats.map((se) =><Seat se={se} key={se.id}/>
-                    // <SeatItem available={se.isAvailable} key={se.id} onClick={()=>select(se.id)}
-                    // selected={selected} >
-                    //     {se.name}
-                    // </SeatItem>
-                    )}
+                {seats.map((se) =><Seat se={se} key={se.id}
+                  seatID={seatID} setSeatID={setSeatID}/>  )}
 
             </SeatsContainer>
 
@@ -69,14 +78,16 @@ export default function SeatsPage() {
                 </CaptionItem>
             </CaptionContainer>
 
-            <FormContainer>
+            <FormContainer onSubmit={submitSeat}>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <input type="text" value={userName} onChange={e=> setUserName(e.target.value)}
+                 placeholder="Digite seu nome..." />
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                <input type="text" value={userCPF} onChange={e=> setUserCPF(e.target.value)}
+                placeholder="Digite seu CPF..." />
 
-                <button>Reservar Assento(s)</button>
+                <button type="submit">Reservar Assento(s)</button>
             </FormContainer>
 
             <FooterContainer>
