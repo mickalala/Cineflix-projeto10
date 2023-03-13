@@ -2,22 +2,23 @@ import styled from "styled-components"
 
 import axios from "axios"
 
-import { useEffect, useState } from "react"
+import { useEffect} from "react"
 
 import { useParams, useNavigate } from "react-router-dom"
 
 import Seat from "./Seat"
 
-export default function SeatsPage() {
+export default function SeatsPage({session, setSession, seats, setSeats, userCPF, setUserCPF, userName, setUserName ,
+seatID, setSeatID, seatName, setSeatName}) {
 
     const { idSessao } = useParams();
-    const [session, setSession] = useState([]);
-    const [seats, setSeats] = useState([]);
+    // const [session, setSession] = useState([]);
+    // const [seats, setSeats] = useState([]);
 
-    const [userCPF, setUserCPF]= useState("");
-    const [userName, setUserName]= useState("");
+    // const [userCPF, setUserCPF]= useState("");
+    // const [userName, setUserName]= useState("");
 
-    const [seatID, setSeatID]= useState("")
+    // const [seatID, setSeatID]= useState("")
 
     const navigate= useNavigate();
 
@@ -39,6 +40,7 @@ export default function SeatsPage() {
     }
     console.log(session);
     console.log(seatID)
+    console.log(seatName)
 
     function submitSeat(event){
 
@@ -59,7 +61,8 @@ export default function SeatsPage() {
 
             <SeatsContainer>
                 {seats.map((se) =><Seat se={se} key={se.id}
-                  seatID={seatID} setSeatID={setSeatID}/>  )}
+                  seatID={seatID} setSeatID={setSeatID} seatName={seatName}
+                  setSeatName={setSeatName} />  )}
 
             </SeatsContainer>
 
@@ -81,16 +84,16 @@ export default function SeatsPage() {
             <FormContainer onSubmit={submitSeat}>
                 Nome do Comprador:
                 <input type="text" value={userName} onChange={e=> setUserName(e.target.value)}
-                 placeholder="Digite seu nome..." />
+                 placeholder="Digite seu nome..." required data-test="client-name"/>
 
                 CPF do Comprador:
                 <input type="text" value={userCPF} onChange={e=> setUserCPF(e.target.value)}
-                placeholder="Digite seu CPF..." />
+                placeholder="Digite seu CPF..." required  data-test="client-cpf"/>
 
-                <button type="submit">Reservar Assento(s)</button>
+                <button type="submit"  data-test="book-seat-btn">Reservar Assento(s)</button>
             </FormContainer>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={session.movie.posterURL} alt="poster" />
                 </div>

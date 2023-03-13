@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { useState } from "react";
 
-export default function Seat({ se, seatID, setSeatID }) {
+export default function Seat({ se, seatID, setSeatID, seatName, setSeatName }) {
 
     const [selected, setSelected] = useState(false)
    
@@ -14,20 +14,25 @@ export default function Seat({ se, seatID, setSeatID }) {
         }
         setSelected(!selected)
         const newSeatID = [...seatID,ses.id]
+        const newSeatName=[...seatName, ses.name]
         if(seatID.includes(ses.id)){
             const idic= seatID.indexOf(ses.id)
+            const idic2= seatName.indexOf(ses.name)
+
             seatID.splice(idic,1)
-            
+            seatName.splice(idic2,1)
+
+            setSeatName(seatName)
             setSeatID(seatID)
             return
         }
-           
+           setSeatName(newSeatName)
            setSeatID(newSeatID)
     }
 
     return (
         <SeatItem available={se.isAvailable} key={se.id} onClick={() => select(se)}
-            selected={selected} >
+            selected={selected} data-test="seat">
             {se.name}
         </SeatItem>
     )
