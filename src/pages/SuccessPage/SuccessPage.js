@@ -23,7 +23,7 @@ export default function SuccessPage({session, userName, setUserName, userCPF,set
             <TextContainer data-test="movie-info">
                 <strong><p>Filme e sessão</p></strong>
                 <p>{session.movie.title}</p>
-                <p>{session.day.weekday} - {session.name}</p>
+                <p>{session.day.date} - {session.name}</p>
             </TextContainer>
 
             <TextContainer data-test="seats-info">
